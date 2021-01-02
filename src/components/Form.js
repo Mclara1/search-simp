@@ -1,22 +1,25 @@
-import React, { useState } from "react";
-import Api2 from './AmadeusApi'
+import React from 'react';
+import Api from './AmadeusApi';
 
-function Form () {
-    const formHandler = e =>{
+const Form = ({apiData, setApiData}) => {
+    const formHandler = async e => {
         e.preventDefault();
-        Api2 (e.target.form[0].value, e.target.form[1].value, e.target.form[2].value, e.target.form[3].value);
+        let resultados = await Api (e.target.form[0].value, e.target.form[1].value, e.target.form[2].value, e.target.form[3].value);
+        setApiData (resultados);
     }
 
     return(
-        <form form method="POST" action="#">
-            <div>
-                <input name='from' type="text"  placeholder="City, Region or Airport" required="required"/>
-                <input name='to' type="text" placeholder="City, Region or Airport" required="required"/>
-                <input name='depart' type="date" placeholder="DD/MM/YYYY" id="input-start"/>
-                <input name='return' type="date" placeholder="DD/MM/YYYY" id="input-end"/>
-                <button onClick={formHandler} type="submit">Search</button>
-            </div>  
-        </form>
+        <div>
+            <form form method="POST">
+                <div>
+                    <input name='from' type="text"  placeholder="City" required="required"/>
+                    <input name='to' type="text" placeholder="City" required="required"/>
+                    <input name='depart' type="date" placeholder="dd/mm/yyyy" id="input-start" required="required"/>
+                    <input name='return' type="date" placeholder="dd/mm/yyyy" id="input-end" required="required"/>
+                    <button onClick={formHandler} type="submit">Search</button>
+                </div>  
+            </form>
+        </div>
     )
 }
 
